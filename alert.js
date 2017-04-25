@@ -1,57 +1,60 @@
-function Alert() {
-    this.cfg = {
-        title:'标题',
-        content:'hekkkkkkaskkkkkkkkk',
-        handler:"",
-        hasMask:true
-    }
-}
-Alert.prototype ={
-    alert:function (cfg) {
-        var CFG = $.extend(this.cfg,cfg);
-        var boundingBox =  $(
-            '<div class="alert_boundingBox animate-fade-in">' +
-            '<div class="alert_hd"><strong class="alert_title">' + CFG.title + '</strong></div>' +
-            '<div class="alert_bd">' + CFG.content + '</div>' +
-            '<div class="alert_ft"><a href="javascript:;" class="alert_btn alert_btn_primary">确定</a></div>' +
-            '</div>');
-        boundingBox.appendTo('body');
-        if(CFG.hasMask){
-            var mask = $('<div class="jui_mask animate-fade-in"></div>');
-            mask.appendTo('body');
-        }
-        var ensureBtn = boundingBox.find('.alert_btn_primary');
-        ensureBtn.click(function(){
-            CFG.handler && CFG.handler();
-            boundingBox.remove();
-            mask.remove();
-        });
-    },
-    confirm:function (cfg) {
-        var CFG = $.extend(this.cfg,cfg);
-        var boundingBox =  $(
-            '<div class="alert_boundingBox animate-fade-in">' +
-            '<div class="alert_hd"><strong class="alert_title">' + CFG.title + '</strong></div>' +
-            '<div class="alert_bd">' + CFG.content + '</div>' +
-            '<div class="alert_ft"><a href="javascript:;" class="alert_btn alert_btn_default ">取消</a><a href="javascript:;" class="alert_btn alert_btn_primary">确定</a></div>' +
-            '</div>');
-        boundingBox.appendTo('body');
-        if(CFG.hasMask){
-            var mask = $('<div class="jui_mask animate-fade-in"></div>');
-            mask.appendTo('body');
-        }
-        var cancelBtn = boundingBox.find('.alert_btn_default');
-        var ensureBtn = boundingBox.find('.alert_btn_primary');
-        ensureBtn.click(function(){
-            CFG.handler && CFG.handler();
-            boundingBox.remove();
-            mask.remove();
-        });
-        cancelBtn.click(function(){
-            CFG.handler && CFG.handler();
-            boundingBox.remove();
-            mask.remove();
-        });
+;(function () {
+    var Alert = function () {
+        this.cfg = {
+            title: '标题',
+            content: 'hekkkkkkaskkkkkkkkk',
+            handler: "",
+            hasMask: true,
+            confirm:false,
+            loading:false
+        };
+    };
+    Alert.prototype = {
+        create: function (cfg) {
+            var CFG = $.extend(this.cfg, cfg);
+            var mask = $('<div class="jui_mask animate-fade-in"></div>'),
+                win =$('<div class="alert_boundingBox animate-fade-in"></div>'),
+                header = $('<div class="alert_hd"><strong class="alert_title">' + CFG.title + '</strong></div>'),
+                content = $('<div class="alert_bd">' + CFG.content + '</div>'),
+                loading =  $('<div class="loading">' + CFG.content + '</div>'),
+                footer = $('<div class="alert_ft"></div>'),
+                winSureBtn =$('<a href="javascript:;" class="alert_btn alert_btn_primary">确定</a>'),
+                winCancelBtn =$('<a href="javascript:;" class="alert_btn alert_btn_primary">取消</a>'),
+                body = $('body');
+            if (CFG.hasMask) {
+                body.append(mask);
+            };
+            if (CFG.confirm) {
+                footer.append(winCancelBtn);
+                footer.append(winSureBtn);
+                winSureBtn.click(function () {
+                    CFG.handler && CFG.handler();
+                    win.remove();
+                    mask.remove();
+                });
+            }else if(CFG.loading){
+                body.append(loading);
+            } else {
+                footer.append(winSureBtn);
+            }
+            // win.append(header);
+            // win.append(content);
+            // win.append(footer);
+            // body.append(win);
+            winCancelBtn.click(function () {
+                CFG.handler && CFG.handler();
+                win.remove();
+                mask.remove();
+            });
 
-    }
-};
+        },
+        alert: function (cfg) {
+            this.create(cfg);
+        },
+        confirm: function (cfg) {
+            this.create(cfg);
+
+        }
+    };
+    window.Alert = Alert;
+})()
