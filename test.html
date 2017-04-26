@@ -15,8 +15,10 @@
 <script>
     var Alert = new Alert();
     $('#btn').click(function () {
-        Alert.alert({
-            loading:true,
+        Alert.confirm({
+//            loading:true,
+//            hasMask: false,
+//            confirm:true,
             title:"自定义标题"
         });
     })

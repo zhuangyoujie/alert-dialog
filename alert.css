@@ -7,6 +7,17 @@
     top: 0;
     left:0;
 }
+.loading {
+    z-index: 1001;
+    position: fixed;
+    margin: 0 auto;
+    width: 50px;
+    height:50px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    background: url(loading2.gif) no-repeat center;background-size: 100%;
+}
 .alert_boundingBox {
     position: fixed;
     z-index: 5000;
