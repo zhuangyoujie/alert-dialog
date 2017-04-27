@@ -2,7 +2,7 @@
     var Alert = function () {
         this.cfg = {
             title: '标题',
-            content: 'hekkkkkkaskkkkkkkkk',
+            content: '可自定义标题',
             sureBtnText:"",
             cancelBtnText:"",
             confirmHandler: null,
