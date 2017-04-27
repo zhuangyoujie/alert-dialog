@@ -3,7 +3,10 @@
         this.cfg = {
             title: '标题',
             content: 'hekkkkkkaskkkkkkkkk',
-            handler: "",
+            sureBtnText:"",
+            cancelBtnText:"",
+            confirmHandler: null,
+            cancelHandler: null,
             hasMask: true,
             confirm:false,
             loading:false
@@ -18,8 +21,8 @@
                 content = $('<div class="alert_bd">' + CFG.content + '</div>'),
                 loading =  $('<div class="loading"></div>'),
                 footer = $('<div class="alert_ft"></div>'),
-                winSureBtn =$('<a href="javascript:;" class="alert_btn alert_btn_primary">确定</a>'),
-                winCancelBtn =$('<a href="javascript:;" class="alert_btn alert_btn_primary">取消</a>'),
+                winSureBtn =$('<a href="javascript:;" class="alert_btn alert_btn_primary">'+CFG.sureBtnText+'</a>'),
+                winCancelBtn =$('<a href="javascript:;" class="alert_btn alert_btn_primary">'+CFG.cancelBtnText+'</a>'),
                 body = $('body');
             if (CFG.hasMask) {
                 body.append(mask);
@@ -38,24 +41,22 @@
                 win.append(footer);
                 body.append(win);
             }
-            winSureBtn.click(function () {
-                CFG.handler && CFG.handler();
+            winSureBtn.on('click',function () {
+                CFG.confirmHandler && CFG.confirmHandler();
                 win.remove();
                 mask.remove();
             });
-            winCancelBtn.click(function () {
-                CFG.handler && CFG.handler();
+            winCancelBtn.on('click',function () {
+                CFG.cancelHandler && CFG.cancelHandler();
                 win.remove();
                 mask.remove();
-            });
-
+            })
         },
         alert: function (cfg) {
             this.create(cfg);
         },
         confirm: function (cfg) {
             this.create(cfg);
-
         }
     };
     window.Alert = Alert;
