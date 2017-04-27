@@ -1,5 +1,5 @@
 # alert-dialog
-alert弹框组件
+基于jquery，移动端alert弹框插件
 
 ## install
 
