@@ -1,4 +1,4 @@
-;(function () {
+(function () {
     var Alert = function () {
         this.cfg = {
             title: '标题',
